@@ -27,40 +27,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class RestApi {
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-	@GetMapping(path="/hello")
-	public String sayHello(@RequestParam(required=false, defaultValue="mms") String name) {
-		return "Hello " + name;
-	}
 	
-	 // 3.1.1 Single file upload
     @PostMapping("/api/upload")
-    // If not @RestController, uncomment this
-    //@ResponseBody
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) {
-
         LOGGER.debug("Single file upload!");
-
-        if (uploadfile.isEmpty()) {
-            return new ResponseEntity<>("please select a file!", HttpStatus.OK);
-        }
-
         try {
-
-            //saveUploadedFiles(Arrays.asList(uploadfile));
         	LOGGER.info("\n\n ****** File name: {}, type {}! ************", uploadfile.getOriginalFilename(), uploadfile.getContentType());
-        	
         	this.processExcelFile(uploadfile.getInputStream());
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<>("Successfully uploaded - " +
-                uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
-
+        return new ResponseEntity<>("Successfully uploaded - " + uploadfile.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
     }
     
     private List<String> processExcelFile(InputStream stream) throws Exception {
@@ -78,9 +56,7 @@ public class RestApi {
 	             result.add(cellValue);
 	             LOGGER.info("\n\n ****** Cell value: {} ************", cellValue);
 	         }
-	         
 	    	return result;
          }
     }
-
 }
