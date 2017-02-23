@@ -40,7 +40,7 @@ public class RestApiTest {
 		
 		MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();           
 //		parts.add("file", new FileSystemResource(resource.getFile()));
-		parts.add("file", new ByteArrayResource(IOUtils.toByteArray(resource.getInputStream())));
+		parts.add("file", resource);
 		
 		String response = this.restTemplate.postForObject("/api/upload", parts, String.class);
 		
