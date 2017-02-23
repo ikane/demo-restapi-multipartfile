@@ -33,26 +33,17 @@ public class RestApiTest {
 	@Autowired
 	private ResourceLoader loader;
 	
-	
 	@Test
 	public void testUploadFile() throws Exception {
 		
-		//ClassPathResource resource = new ClassPathResource("classpath:test.xlsx");
-		
 		Resource resource = this.loader.getResource("classpath:test.xlsx");
-		
 		
 		MultiValueMap<String, Object> parts = new LinkedMultiValueMap<>();           
 //		parts.add("file", new FileSystemResource(resource.getFile()));
 		parts.add("file", new ByteArrayResource(IOUtils.toByteArray(resource.getInputStream())));
 		
-		
 		String response = this.restTemplate.postForObject("/api/upload", parts, String.class);
-		
 		
 		Assertions.assertThat(response).containsIgnoringCase("success");
 	}
-	
-	
-
 }
