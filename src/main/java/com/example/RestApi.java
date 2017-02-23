@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,7 +12,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +64,7 @@ public class RestApi {
     }
     
     private List<String> processExcelFile(InputStream stream) throws Exception {
-    	List<String> result = Lists.newArrayList();    	
+    	List<String> result = new ArrayList<String>();    	
     	 
          //Create Workbook instance holding reference to .xlsx file
          try(XSSFWorkbook workbook = new XSSFWorkbook(stream);) {
